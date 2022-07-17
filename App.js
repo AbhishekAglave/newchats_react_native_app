@@ -6,22 +6,29 @@ import {
   StyleSheet,
   View,
   Pressable,
-  Appearance,
+  useColorScheme,
+  StatusBar,
 } from 'react-native';
 
 const App = () => {
-  const colorScheme = Appearance.getColorScheme();
-  const [darkMode, setDarkMode] = useState();
+  const colorScheme = useColorScheme();
   const [number, setNumber] = useState('');
   const [message, setMessage] = useState('');
   const regex = /^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[6789]\d{9}$/;
   let styles = {};
+  const [buttonColor, setButtonColor] = useState('#0fd319');
+  const button = {
+    height: 40,
+    margin: 10,
+    marginTop: 30,
+    backgroundColor: buttonColor,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 8,
+  };
 
-  useEffect(() => {
-    setDarkMode(colorScheme === 'dark');
-  }, []);
-
-  if (darkMode) {
+  if (colorScheme === 'dark') {
     styles = StyleSheet.create({
       input: {
         height: 40,
@@ -30,16 +37,6 @@ const App = () => {
         borderColor: '#ccc',
         backgroundColor: 'black',
         padding: 10,
-        borderRadius: 8,
-      },
-      button: {
-        height: 40,
-        margin: 10,
-        marginTop: 30,
-        backgroundColor: '#0fd319',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
         borderRadius: 8,
       },
       buttonText: {
@@ -79,7 +76,8 @@ const App = () => {
         color: 'blue',
       },
     });
-  } else {
+  }
+  if (colorScheme === 'light') {
     styles = StyleSheet.create({
       input: {
         height: 40,
@@ -90,16 +88,16 @@ const App = () => {
         padding: 10,
         borderRadius: 8,
       },
-      button: {
-        height: 40,
-        margin: 10,
-        marginTop: 30,
-        backgroundColor: '#0fd319',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 8,
-      },
+      // button: {
+      //   height: 40,
+      //   margin: 10,
+      //   marginTop: 30,
+      //   backgroundColor: '#0fd319',
+      //   display: 'flex',
+      //   alignItems: 'center',
+      //   justifyContent: 'center',
+      //   borderRadius: 8,
+      // },
       buttonText: {
         color: 'white',
       },
@@ -137,7 +135,6 @@ const App = () => {
       },
     });
   }
-
   function openChat() {
     let phone = number.replace(/\s/g, '');
     if (phone.length == 0) {
@@ -155,6 +152,7 @@ const App = () => {
   }
   return (
     <View style={styles.app}>
+      <StatusBar backgroundColor="#0fd319" />
       <Text style={styles.heading}>WhatsApp Chat</Text>
       <View style={styles.container}>
         <Text style={styles.label}>
@@ -181,7 +179,15 @@ const App = () => {
           value={message}
           placeholder="Write Message..."
         />
-        <Pressable style={styles.button} onPress={openChat}>
+        <Pressable
+          style={button}
+          onPressIn={() => {
+            setButtonColor('#4CAF50');
+          }}
+          onPressOut={() => {
+            setButtonColor('#0fd319');
+          }}
+          onPress={openChat}>
           <Text style={styles.buttonText}>Open Chat</Text>
         </Pressable>
       </View>
