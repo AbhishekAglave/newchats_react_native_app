@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {
   Text,
   Linking,
@@ -88,16 +88,6 @@ const App = () => {
         padding: 10,
         borderRadius: 8,
       },
-      // button: {
-      //   height: 40,
-      //   margin: 10,
-      //   marginTop: 30,
-      //   backgroundColor: '#0fd319',
-      //   display: 'flex',
-      //   alignItems: 'center',
-      //   justifyContent: 'center',
-      //   borderRadius: 8,
-      // },
       buttonText: {
         color: 'white',
       },
